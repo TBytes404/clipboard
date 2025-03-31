@@ -1,0 +1,6 @@
+.DS_Store
+view/*_templ.go
+tmp/
+node_modules/
+assets/*.css
+assets/*.js

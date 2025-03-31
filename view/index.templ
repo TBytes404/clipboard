@@ -1,0 +1,37 @@
+package view
+
+templ HomePage(blobs []string) {
+@Layout("Home") {
+<header>
+  <h1 class="text-3xl m-8">Clip Board</h1>
+</header>
+<main>
+  <ul>
+    for _, blob:=range blobs {
+    <li>{ blob }</li>
+    }
+  </ul>
+</main>
+}
+}
+
+templ Layout(title string) {
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="/public/favicon.ico" />
+  <link rel="apple-touch-icon" href="/public/apple-touch-icon.png" />
+  <title>Clip Board - { title }</title>
+  <link rel="stylesheet" href="/public/style.css" />
+  <script type="module" src="/public/script.js"></script>
+</head>
+
+<body>
+  { children... }
+</body>
+
+</html>
+}
