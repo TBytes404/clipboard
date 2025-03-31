@@ -12,7 +12,8 @@
   "main": "index.js",
   "scripts": {
     "style": "tailwindcss -i ./view/style.css -o ./assets/style.css --optimize --watch",
-    "build": "esbuild ./view/script.ts --bundle --outfile=./assets/script.js --watch"
+    "build": "esbuild ./view/script.ts --bundle --outfile=./assets/script.js --watch",
+    "prod": "tailwindcss -i ./view/style.css -o ./assets/style.css --optimize --minify && esbuild ./view/script.ts --bundle --outfile=./assets/script.js --minify"
   },
   "devDependencies": {
     "esbuild": "0.25.2"

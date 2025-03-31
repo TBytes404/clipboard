@@ -2,35 +2,32 @@ package main
 
 import (
 	"log"
+	"os"
 
-	"github.com/labstack/echo/v4"
 	"github.com/tbytes404/clipboard/db"
 	"github.com/tbytes404/clipboard/handler"
+	"github.com/tbytes404/clipboard/router"
 	"github.com/tbytes404/clipboard/store"
 )
 
 func main() {
-	db, err := db.NewDatabase()
+	addr := os.Getenv("CLPBRD_ADDR")
+	if addr == "" {
+		addr = ":8282"
+	}
+
+	dsn := os.Getenv("CLPBRD_DSN")
+	if dsn == "" {
+		dsn = "./db/test.db"
+	}
+
+	db, err := db.NewDatabase(dsn)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	h := handler.NewBlobsHandler(store.NewBlobsStore(db))
+	bs := store.NewBlobsStore(db)
+	bh := handler.NewBlobsHandler(bs)
 
-	e := echo.New()
-
-	e.HTTPErrorHandler = func(err error, c echo.Context) {
-		e.Logger.Error(err)
-		e.DefaultHTTPErrorHandler(err, c)
-	}
-
-	e.Static("/public", "./assets/")
-
-	e.GET("/", h.HomePage)
-
-	e.POST("/", h.AddBlob)
-
-	e.DELETE("/", h.DeleteBlob)
-
-	e.Logger.Fatal(e.Start(":8282"))
+	log.Fatal(router.Init(bh).Start(addr))
 }
