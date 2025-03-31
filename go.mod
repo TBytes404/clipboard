@@ -3,8 +3,9 @@ module github.com/tbytes404/clipboard
 go 1.24.1
 
 require (
-	github.com/labstack/echo/v4 v4.13.3
 	github.com/a-h/templ v0.3.857
+	github.com/labstack/echo/v4 v4.13.3
+	github.com/mattn/go-sqlite3 v1.14.24
 )
 
 require (

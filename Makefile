@@ -34,3 +34,6 @@ live/sync_assets:
 # start all 5 watch processes in parallel.
 live: 
 	make -j5 live/templ live/server live/tailwind live/esbuild live/sync_assets
+
+migrateup:
+	migrate -path db/migrations -database "sqlite3://db/test.db" -verbose up

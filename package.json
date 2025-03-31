@@ -11,12 +11,15 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "style": "tailwindcss -i ./view/style.css -o ./assets/style.css --watch",
+    "style": "tailwindcss -i ./view/style.css -o ./assets/style.css --optimize --watch",
     "build": "esbuild ./view/script.ts --bundle --outfile=./assets/script.js --watch"
   },
   "devDependencies": {
+    "esbuild": "0.25.2"
+  },
+  "dependencies": {
     "@tailwindcss/cli": "^4.0.17",
-    "esbuild": "0.25.2",
+    "htmx.org": "^2.0.4",
     "tailwindcss": "^4.0.17"
   }
 }

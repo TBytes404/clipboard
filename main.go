@@ -1,40 +1,36 @@
 package main
 
 import (
-	"net/http"
+	"log"
 
-	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
-	"github.com/tbytes404/clipboard/view"
+	"github.com/tbytes404/clipboard/db"
+	"github.com/tbytes404/clipboard/handler"
+	"github.com/tbytes404/clipboard/store"
 )
 
-var dummy = []string{
-	"hello hi goodbye tumi jemon amie temon",
-	"hello hi goodbye tumi jemon amie temon",
-	"hello hi goodbye tumi jemon amie temon",
-	"hello hi goodbye tumi jemon amie temon",
-	"hello hi goodbye tumi jemon amie temon",
-}
-
 func main() {
+	db, err := db.NewDatabase()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	h := handler.NewBlobsHandler(store.NewBlobsStore(db))
+
 	e := echo.New()
+
+	e.HTTPErrorHandler = func(err error, c echo.Context) {
+		e.Logger.Error(err)
+		e.DefaultHTTPErrorHandler(err, c)
+	}
 
 	e.Static("/public", "./assets/")
 
-	e.GET("/", func(c echo.Context) error {
-		return Render(c, http.StatusOK, view.HomePage(dummy))
-	})
+	e.GET("/", h.HomePage)
+
+	e.POST("/", h.AddBlob)
+
+	e.DELETE("/", h.DeleteBlob)
 
 	e.Logger.Fatal(e.Start(":8282"))
-}
-
-// This custom Render replaces Echo's echo.Context.Render() with templ's templ.Component.Render().
-func Render(ctx echo.Context, statusCode int, t templ.Component) error {
-	buf := templ.GetBuffer()
-	defer templ.ReleaseBuffer(buf)
-
-	if err := t.Render(ctx.Request().Context(), buf); err != nil {
-		return err
-	}
-	return ctx.HTML(statusCode, buf.String())
 }

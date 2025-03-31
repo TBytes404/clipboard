@@ -1,0 +1,4 @@
+CREATE TABLE "blobs" (
+    "id" INTEGER NOT NULL PRIMARY KEY,
+    "text" TEXT NOT NULL
+);
