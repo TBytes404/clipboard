@@ -13,11 +13,7 @@ templ HomePage(blobs model.Blobs) {
   </button>
 </header>
 <main class="mb-24">
-  <ul id="blobs" class="p-12 flex flex-wrap gap-6 justify-center items-center">
-    for _, blob:=range blobs {
-    @Blob(blob)
-    }
-  </ul>
+  @Blobs(blobs)
 </main>
 <footer id="toast" class="justify-center items-center hidden transition-opacity">
   <p class="fixed bottom-12 text-center py-2 px-4 rounded-xl bg-zinc-100 shadow-xl">
@@ -25,6 +21,14 @@ templ HomePage(blobs model.Blobs) {
   </p>
 </footer>
 }
+}
+
+templ Blobs(blobs model.Blobs) {
+<ul hx-get="/blobs" hx-trigger="every 5s" id="blobs" class="p-12 flex flex-wrap gap-6 justify-center items-center">
+  for _, blob:=range blobs {
+  @Blob(blob)
+  }
+</ul>
 }
 
 templ Blob(blob model.Blob) {

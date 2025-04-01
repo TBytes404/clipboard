@@ -29,4 +29,4 @@ Navigate to `http://localhost:8000` on browser.
 
 ### To Do
 
-- [ ] Update client with new data (web socket, server sent events, polling)
+- [x] ~~Update client with new data (web socket, server sent events, polling)~~

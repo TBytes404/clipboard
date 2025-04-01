@@ -47,3 +47,11 @@ func (h *BlobsHandler) DeleteBlob(c echo.Context) error {
 	}
 	return c.NoContent(http.StatusOK)
 }
+
+func (h *BlobsHandler) FetchBlobs(c echo.Context) error {
+	blobs, err := h.store.FilterBlobs()
+	if err != nil {
+		return err
+	}
+	return Render(c, http.StatusOK, view.Blobs(blobs))
+}

@@ -6,7 +6,7 @@ live/templ:
 
 # run air to detect any go file changes to re-build and re-run the server.
 live/server:
-	go run github.com/air-verse/air@latest\
+	go run github.com/air-verse/air@latest \
 	--build.cmd "go build -o tmp/bin/main" --build.bin "tmp/bin/main" --build.delay "100" \
 	--build.exclude_dir "node_modules" \
 	--build.include_ext "go" \

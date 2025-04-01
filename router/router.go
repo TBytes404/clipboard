@@ -21,5 +21,7 @@ func Init(bh *handler.BlobsHandler) *echo.Echo {
 
 	e.DELETE("/", bh.DeleteBlob)
 
+	e.GET("/blobs", bh.FetchBlobs)
+
 	return e
 }
